@@ -27,7 +27,7 @@ router.get("/:id", async (req, res) => {
     res.json(err);
   });
   if(!oneProduct){
-    res.status(404).json({message:'This product with this ID does not exist'})
+    res.status(404).json({message:'Product with this ID number does not exist in database at this moment'})
   }
   res.status(200).json(oneProduct)
 
