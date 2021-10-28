@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
   }).catch((err) => {
       res.json(err);
     });
+    
     res.status(200).json(allProducts)
  
 });
@@ -25,6 +26,9 @@ router.get("/:id", async (req, res) => {
   }).catch((err) => {
     res.json(err);
   });
+  if(!oneProduct){
+    res.status(404).json({message:'This product with this ID does not exist'})
+  }
   res.status(200).json(oneProduct)
 
 });
