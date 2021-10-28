@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { Product, Category, Tag, ProductTag } = require("../../models");
+const { destroy } = require("../../models/Product");
 
 // The `/api/products` endpoint
 
@@ -104,6 +105,11 @@ router.put("/:id", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   // delete one product by its `id` value
-});
+  Product.destroy({ where:{id: req.params.id}}).catch((err) => {
+    res.json(err)
+})
+res.status(200).json({message:'Product has been removed from database'})
+})
+
 
 module.exports = router;
