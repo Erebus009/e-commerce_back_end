@@ -12,14 +12,22 @@ router.get("/", async (req, res) => {
       res.json(err);
     });
     res.status(200).json(allProducts)
-  // be sure to include its associated Category and Tag data
+ 
 });
 
 // get one product
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+  const oneProduct = await Product.findOne({ where:{id:req.params.id},
+    include: [{model: Category}, {model: Tag}],
+    
+  }).catch((err) => {
+    res.json(err);
+  });
+  res.status(200).json(oneProduct)
+
 });
+
 
 // create new product
 router.post("/", (req, res) => {
