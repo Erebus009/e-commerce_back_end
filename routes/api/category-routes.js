@@ -2,9 +2,11 @@ const router = require("express").Router();
 const { Category, Product } = require("../../models");
 
 // The `/api/categories` endpoint
-
+//====================================
+// Find all categories 
+//===================================
 router.get("/", async (req, res) => {
-  // find all categories data
+
   const categories = await Category.findAll({
     include: {
       model: Product,
@@ -14,9 +16,13 @@ router.get("/", async (req, res) => {
   });
   res.json(categories);
 });
+//===========================================
+// Find one category by its `id` value
+//===========================================
+
 
 router.get("/:id", async (req, res) => {
-  // find one category by its `id` value
+  
   const category_id = await Category.findOne({
     where: {
       id: req.params.id,
@@ -39,9 +45,13 @@ router.post("/", async (req, res) => {
     res.status(500).json(err)
   }
 })  
+//=================================================
+// Update a category by its `id` value
+//==================================================
+
 
 router.put("/:id", async (req, res) => {
-  // update a category by its `id` value
+
   try {
     const updateCategory = await Category.update({category_name: req.body.category_name},{where:{ id:req.params.id}});
     if(!updateCategory[0]) {
@@ -54,11 +64,15 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
-  // delete a category by its `id` value
+
+
+  //============================================
+  // Delete a category by its `id` value
+  //============================================
   try {
     const destroyCategory = await Category.destroy({where:{id:req.params.id}});
     if(!destroyCategory) {
-      res.status(404).json({message: "No Category macthes that ID"})
+      res.status(404).json({message: "No Category matches that ID"})
       }
     res.status(200).json(destroyCategory)
   } catch (err){

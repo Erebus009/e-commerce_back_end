@@ -2,7 +2,9 @@ const router = require("express").Router();
 const { Tag, Product, ProductTag } = require("../../models");
 
 // The `/api/tags` endpoint
-
+//===================================================================================================
+// Gets all tags and attaches product model to display attributes from Product to each assoicated tag
+//===================================================================================================
 router.get("/", async (req, res) => {
   // find all tags
   const allTags = await Tag.findAll({
@@ -48,12 +50,16 @@ router.post("/", async (req, res) => {
   );
   res.status(200).json(createTag);
 });
+//===========================
+// Updates a single tag based on it's Id
+//====================================
+
 
 router.put("/:id", async (req, res) => {
   // update a tag's name by its `id` value
   const updateTag = await Tag.update(
-    { tag_name: req.body.tag_name },
-    { where: { id: req.params.id } }
+    { tag_name: req.body.tag_name},
+    { where: { id: req.params.id }}
   ).catch((err) => {
     res.status(500).json(err);
   });
